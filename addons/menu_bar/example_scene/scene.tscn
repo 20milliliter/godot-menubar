@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bi4d14bk621x"]
+[gd_scene load_steps=12 format=3 uid="uid://bi4d14bk621x"]
 
 [ext_resource type="Script" path="res://scene.gd" id="1_bjpy8"]
 [ext_resource type="Script" path="res://addons/menu_bar/menu_bar_node.gd" id="1_jcap4"]
@@ -24,6 +24,10 @@ keycode = 73
 [sub_resource type="InputEventKey" id="InputEventKey_4t1f6"]
 keycode = 79
 
+[sub_resource type="InputEventKey" id="InputEventKey_0krn7"]
+command_pressed = true
+keycode = 69
+
 [sub_resource type="ButtonGroup" id="ButtonGroup_ddxyo"]
 
 [node name="UI" type="Control"]
@@ -44,6 +48,9 @@ shortcut_dictionary = {
 "Checkboxes": {
 "Check1": SubResource("InputEventKey_ytga7"),
 "Check2": SubResource("InputEventKey_1gxba")
+},
+"New": {
+"New Checkbox": SubResource("InputEventKey_0krn7")
 },
 "Radio": {
 "Radio1": SubResource("InputEventKey_0i5e2"),
@@ -99,5 +106,17 @@ popup/item_1/id = 1
 popup/item_2/text = "Radio3"
 popup/item_2/checkable = 2
 popup/item_2/id = 2
+
+[node name="Menu4" type="MenuButton" parent="MenuBar/MenuBarMenuButtons"]
+offset_left = 235.0
+offset_right = 278.0
+offset_bottom = 40.0
+button_group = SubResource("ButtonGroup_ddxyo")
+text = "New"
+switch_on_hover = true
+item_count = 1
+popup/item_0/text = "New Checkbox"
+popup/item_0/checkable = 1
+popup/item_0/id = 2
 
 [connection signal="item_pressed" from="MenuBar" to="." method="_on_menu_bar_item_pressed"]
