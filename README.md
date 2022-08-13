@@ -54,7 +54,7 @@ Alternatively, open the included project if you'd like to see it in action first
 
 Currently there is no great way to handle radio buttons. The signal only gives the button pressed as in 90% of cases, that's the only one relevant. Radio buttons are the 10, however, as you must also disable the buttons that were *not* the one that was pressed.
 
-The normal solution, a ```ButtonGroup``` does not work here as these buttons are embedded within the woefully inaccessible ```PopupMenu```, itself within a ```MenuButton```. As of now, radio buttons can function, with the limitation that **all** radio button within a given ```MenuButton``` must be treated as a single group.
+The normal solution, a ```ButtonGroup``` does not work here as these buttons are embedded within the woefully inaccessible ```PopupMenu```, itself within a ```MenuButton```. As of now, radio buttons can function, with the limitation that **all** radio button within a given ```MenuButton``` must be treated as a single group. See example project for this in detail.
 
 More complex code and retrival of data within ```MenuBar```'s script could be used as a workaround. That's stupid though, you shouldn't have to do that. As such, I intend my first update to this plugin to remedy this limitation.
 
@@ -62,5 +62,5 @@ More complex code and retrival of data within ```MenuBar```'s script could be us
 ## Plan
 
 - Fix the radio button issue. I already know how to, I just need to do it.
-- The above involves including Seperator items in the ```path```. Should it be done always? What if theres no seperators at all? Only for radio buttons? I'll have to think about it.
+- The above involves including Seperator items in the ```path```. But should it be done always? What if theres no seperators at all? Only for radio buttons? I'll have to think about it.
 - Consider the ramifications of ```MenuBar``` extending ```HBoxContainer``` instead of ```Panel```. This removes the need for the weird ```HBoxContainer``` child, and (I think?) has no negative impact on functionality whatsoever.
