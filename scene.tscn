@@ -1,0 +1,103 @@
+[gd_scene load_steps=11 format=3 uid="uid://bi4d14bk621x"]
+
+[ext_resource type="Script" path="res://scene.gd" id="1_bjpy8"]
+[ext_resource type="Script" path="res://addons/menu_bar/menu_bar_node.gd" id="1_jcap4"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_hvumr"]
+keycode = 65
+
+[sub_resource type="InputEventKey" id="InputEventKey_qs57b"]
+keycode = 83
+
+[sub_resource type="InputEventKey" id="InputEventKey_26dqb"]
+keycode = 70
+
+[sub_resource type="InputEventKey" id="InputEventKey_8gtee"]
+keycode = 71
+
+[sub_resource type="InputEventKey" id="InputEventKey_v740a"]
+keycode = 84
+
+[sub_resource type="InputEventKey" id="InputEventKey_0ma34"]
+keycode = 89
+
+[sub_resource type="InputEventKey" id="InputEventKey_y2dpd"]
+keycode = 85
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_ddxyo"]
+
+[node name="UI" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_bjpy8")
+
+[node name="MenuBar" type="Panel" parent="."]
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+script = ExtResource("1_jcap4")
+shortcutDictionary = {
+"Buttons": {
+"Button1": SubResource("InputEventKey_hvumr"),
+"Button2": SubResource("InputEventKey_qs57b")
+},
+"Checkboxes": {
+"Check1": SubResource("InputEventKey_26dqb"),
+"Check2": SubResource("InputEventKey_8gtee")
+},
+"Radio": {
+"Radio1": SubResource("InputEventKey_v740a"),
+"Radio2": SubResource("InputEventKey_0ma34"),
+"Radio3": SubResource("InputEventKey_y2dpd")
+}
+}
+metadata/_edit_layout_mode = 1
+
+[node name="MenuBarMenuButtons" type="HBoxContainer" parent="MenuBar"]
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+
+[node name="Menu1" type="MenuButton" parent="MenuBar/MenuBarMenuButtons"]
+offset_right = 70.0
+offset_bottom = 40.0
+text = "Buttons"
+switch_on_hover = true
+item_count = 2
+popup/item_0/text = "Button1"
+popup/item_0/id = 0
+popup/item_1/text = "Button2"
+popup/item_1/id = 1
+
+[node name="Menu2" type="MenuButton" parent="MenuBar/MenuBarMenuButtons"]
+offset_left = 74.0
+offset_right = 175.0
+offset_bottom = 40.0
+text = "Checkboxes"
+switch_on_hover = true
+item_count = 2
+popup/item_0/text = "Check1"
+popup/item_0/checkable = 1
+popup/item_0/id = 0
+popup/item_1/text = "Check2"
+popup/item_1/checkable = 1
+popup/item_1/id = 1
+
+[node name="Menu3" type="MenuButton" parent="MenuBar/MenuBarMenuButtons"]
+offset_left = 179.0
+offset_right = 231.0
+offset_bottom = 40.0
+button_group = SubResource("ButtonGroup_ddxyo")
+text = "Radio"
+switch_on_hover = true
+item_count = 3
+popup/item_0/text = "Radio1"
+popup/item_0/checkable = 2
+popup/item_0/id = 0
+popup/item_1/text = "Radio2"
+popup/item_1/checkable = 2
+popup/item_1/id = 1
+popup/item_2/text = "Radio3"
+popup/item_2/checkable = 2
+popup/item_2/id = 2
+
+[connection signal="item_pressed" from="MenuBar" to="." method="_on_menu_bar_item_pressed"]

@@ -30,20 +30,21 @@ func _process(_delta):
 @export var shortcutDictionary : Dictionary
 func build_shortcut_dictionary_from_menubuttons():
 	var old_shortcuts = shortcutDictionary.duplicate(true)
+	shortcutDictionary.clear()
 	var all_items_on_bar = $MenuBarMenuButtons.get_children()
 	for item in all_items_on_bar:
 		if not item is MenuButton: continue
 		var menu_popup = item.get_popup()
-		var old_options_dict = old_shortcuts[item.text]
+		var old_options_dict = old_shortcuts.get(item.text)
 		var menu_dict = build_dictionary_from_individual_menu(menu_popup, old_options_dict)
 		shortcutDictionary[item.text] = menu_dict
 			
-func build_dictionary_from_individual_menu(menu:PopupMenu, old:Dictionary) -> Dictionary:
+func build_dictionary_from_individual_menu(menu:PopupMenu, old) -> Dictionary:
 	var option_dict = {}
 	for index in menu.get_item_count():
 		if menu.is_item_separator(index): continue
 		var option_text = menu.get_item_text(index)
-		var previous_option = old.get(option_text)
+		var previous_option = old.get(option_text) if old != null else null
 		if previous_option != null:
 			option_dict[option_text] = previous_option
 		else:
@@ -73,10 +74,11 @@ func setup_menu_bar():
 func setup_single_menu(menu:MenuButton):
 	var menu_popup = menu.get_popup()
 	menu_popup.connect("id_pressed", convert_menuButton_signal)
+	var menu_dictionary = shortcutDictionary[menu.text]
 
-	for item_idx in menu_popup.get_item_count():
+	for item_idx in menu_popup.item_count:
 		if menu_popup.is_item_separator(item_idx): continue
-		var shortcut = shortcutDictionary.get(menu_popup.get_item_text(item_idx))
+		var shortcut = menu_dictionary[menu_popup.get_item_text(item_idx)]
 		setup_option(menu, item_idx, shortcut)
 
 var global_id_count = 0
@@ -90,12 +92,14 @@ func setup_option(menu_button:MenuButton, local_index:int, shortcut_inputevent:I
 	gId_to_local_index[global_id_count] = local_index
 	#gID -> PopupMenu
 	gId_to_parent_menuButton[global_id_count] = menu_button
+	global_id_count += 1
 	
 	#Set Shortcut if one exists
+	if shortcut_inputevent.keycode == 0: return
 	var shortcut = Shortcut.new()
-	shortcut.events.append(shortcut_inputevent)
+	shortcut.events = [shortcut_inputevent]
 	popup_menu.set_item_shortcut(local_index, shortcut)
-	global_id_count += 1
+	
 
 signal item_pressed(path:String, popup_menu:PopupMenu, item_index:int)
 func convert_menuButton_signal(gId_of_item_pressed:int):

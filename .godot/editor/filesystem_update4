@@ -1,3 +1,5 @@
-res://TestAlt.tscn
+res://scene.tscn
 res://addons/menu_bar/menu_bar_node.gd
-res://testalt.gd
+res://shortcuttest.tscn
+res://shortcutButton.gd
+res://scene.gd
