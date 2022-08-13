@@ -3,26 +3,26 @@
 [ext_resource type="Script" path="res://scene.gd" id="1_bjpy8"]
 [ext_resource type="Script" path="res://addons/menu_bar/menu_bar_node.gd" id="1_jcap4"]
 
-[sub_resource type="InputEventKey" id="InputEventKey_hvumr"]
-keycode = 65
+[sub_resource type="InputEventKey" id="InputEventKey_kjouv"]
+keycode = 81
 
-[sub_resource type="InputEventKey" id="InputEventKey_qs57b"]
-keycode = 83
+[sub_resource type="InputEventKey" id="InputEventKey_lsrly"]
+keycode = 87
 
-[sub_resource type="InputEventKey" id="InputEventKey_26dqb"]
-keycode = 70
+[sub_resource type="InputEventKey" id="InputEventKey_ytga7"]
+keycode = 82
 
-[sub_resource type="InputEventKey" id="InputEventKey_8gtee"]
-keycode = 71
-
-[sub_resource type="InputEventKey" id="InputEventKey_v740a"]
+[sub_resource type="InputEventKey" id="InputEventKey_1gxba"]
 keycode = 84
 
-[sub_resource type="InputEventKey" id="InputEventKey_0ma34"]
-keycode = 89
-
-[sub_resource type="InputEventKey" id="InputEventKey_y2dpd"]
+[sub_resource type="InputEventKey" id="InputEventKey_0i5e2"]
 keycode = 85
+
+[sub_resource type="InputEventKey" id="InputEventKey_jgojy"]
+keycode = 73
+
+[sub_resource type="InputEventKey" id="InputEventKey_4t1f6"]
+keycode = 79
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_ddxyo"]
 
@@ -36,19 +36,19 @@ anchor_right = 1.0
 offset_bottom = 40.0
 grow_horizontal = 2
 script = ExtResource("1_jcap4")
-shortcutDictionary = {
+shortcut_dictionary = {
 "Buttons": {
-"Button1": SubResource("InputEventKey_hvumr"),
-"Button2": SubResource("InputEventKey_qs57b")
+"Button1": SubResource("InputEventKey_kjouv"),
+"Button2": SubResource("InputEventKey_lsrly")
 },
 "Checkboxes": {
-"Check1": SubResource("InputEventKey_26dqb"),
-"Check2": SubResource("InputEventKey_8gtee")
+"Check1": SubResource("InputEventKey_ytga7"),
+"Check2": SubResource("InputEventKey_1gxba")
 },
 "Radio": {
-"Radio1": SubResource("InputEventKey_v740a"),
-"Radio2": SubResource("InputEventKey_0ma34"),
-"Radio3": SubResource("InputEventKey_y2dpd")
+"Radio1": SubResource("InputEventKey_0i5e2"),
+"Radio2": SubResource("InputEventKey_jgojy"),
+"Radio3": SubResource("InputEventKey_4t1f6")
 }
 }
 metadata/_edit_layout_mode = 1

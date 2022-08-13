@@ -27,17 +27,17 @@ func _process(_delta):
 			self.notify_property_list_changed()
 			print("Rebuilt Shortcut Dictionary")
 
-@export var shortcutDictionary : Dictionary
+@export var shortcut_dictionary : Dictionary
 func build_shortcut_dictionary_from_menubuttons():
-	var old_shortcuts = shortcutDictionary.duplicate(true)
-	shortcutDictionary.clear()
+	var old_shortcuts = shortcut_dictionary.duplicate(true)
+	shortcut_dictionary.clear()
 	var all_items_on_bar = $MenuBarMenuButtons.get_children()
 	for item in all_items_on_bar:
 		if not item is MenuButton: continue
 		var menu_popup = item.get_popup()
 		var old_options_dict = old_shortcuts.get(item.text)
 		var menu_dict = build_dictionary_from_individual_menu(menu_popup, old_options_dict)
-		shortcutDictionary[item.text] = menu_dict
+		shortcut_dictionary[item.text] = menu_dict
 			
 func build_dictionary_from_individual_menu(menu:PopupMenu, old) -> Dictionary:
 	var option_dict = {}
@@ -74,11 +74,11 @@ func setup_menu_bar():
 func setup_single_menu(menu:MenuButton):
 	var menu_popup = menu.get_popup()
 	menu_popup.connect("id_pressed", convert_menuButton_signal)
-	var menu_dictionary = shortcutDictionary[menu.text]
+	var menu_dictionary = shortcut_dictionary.get(menu.text)
 
 	for item_idx in menu_popup.item_count:
 		if menu_popup.is_item_separator(item_idx): continue
-		var shortcut = menu_dictionary[menu_popup.get_item_text(item_idx)]
+		var shortcut = menu_dictionary[menu_popup.get_item_text(item_idx)] if menu_dictionary != null else null
 		setup_option(menu, item_idx, shortcut)
 
 var global_id_count = 0
@@ -95,7 +95,7 @@ func setup_option(menu_button:MenuButton, local_index:int, shortcut_inputevent:I
 	global_id_count += 1
 	
 	#Set Shortcut if one exists
-	if shortcut_inputevent.keycode == 0: return
+	if shortcut_inputevent == null or shortcut_inputevent.keycode == 0: return
 	var shortcut = Shortcut.new()
 	shortcut.events = [shortcut_inputevent]
 	popup_menu.set_item_shortcut(local_index, shortcut)
@@ -108,3 +108,5 @@ func convert_menuButton_signal(gId_of_item_pressed:int):
 	var local_index = popup_menu.get_item_index(gId_of_item_pressed)
 	var path = "%s/%s" % [menu.text, popup_menu.get_item_text(local_index)]
 	emit_signal("item_pressed", path, popup_menu, local_index)
+	if get_signal_connection_list("item_pressed").size() == 0:
+		print(path + " was pressed.")
