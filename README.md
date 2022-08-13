@@ -9,7 +9,7 @@ As icing on the cake, it also makes setting shortcuts for items in these menus *
 ## Installation
 
 Out of the zipped contents, move the addons folder to your project folder, and enable the plugin.
-Alternatively, open the included project if you'd like to see it in action first.
+An example scene is included if you'd like to see it in action first.
 
 <br>
 
@@ -39,9 +39,9 @@ Alternatively, open the included project if you'd like to see it in action first
 
 8. Use ```match(path)``` to redirect program flow to functions for each<sup>**</sup> menu item<sup>*</sup>
 
-<sup>\*Included is an example project with this implementation. It's reccomended you take a look to see it in action, as well as how to edit item properties in response to action. Your implementation can be anything, I've just found this method to be simple and straightforward.</sup>
+<sup>\*Included is an example scene with this implementation. It's reccomended you take a look to see it in action, as well as how to edit item properties in response to action. Your implementation can be anything, I've just found this method to be simple and straightforward.</sup>
 
-<sup>**The example project also shows how one function can service multiple menu items, so you may not need a function for every item individually if you use this method.</sup>
+<sup>**The example scene also shows how one function can service multiple menu items, so you may not need a function for every item individually if you use this method.</sup>
 
 9. Done! Enjoy your menu bar. Add theme to taste.
 
