@@ -46,21 +46,17 @@ An example scene is included if you'd like to see it in action first.
 9. Done! Enjoy your menu bar. Add theme to taste.
 
 
-<br>
+### Addendum: Using Radio Buttons
 
-## Limitations
+When using radio buttons, the `section_indices` argument is key. 
 
-### Radio Buttons
+When a ```MenuButton``` option is interacted with, both a seperator before and after the option is searched for. Once both are found, the range of values between them becomes `section_indices`. If a seperator is not found, the menu start and end are treated as seperators. A menu with no seperators results an array of every index.
 
-Currently there is no great way to handle radio buttons. The signal only gives the button pressed as in 90% of cases, that's the only one relevant. Radio buttons are the 10, however, as you must also disable the buttons that were *not* the one that was pressed.
-
-The normal solution, a ```ButtonGroup``` does not work here as these buttons are embedded within the woefully inaccessible ```PopupMenu```, itself within a ```MenuButton```. As of now, radio buttons can function, with the limitation that **all** radio button within a given ```MenuButton``` must be treated as a single group. See example project for this in detail.
-
-More complex code and retrival of data within ```MenuBar```'s script could be used as a workaround. That's stupid though, you shouldn't have to do that. As such, I intend my first update to this plugin to remedy this limitation.
+In the case of radio buttons, this array must be utilized to disable the menu items to be de-selected.
 
 
 ## Plan
 
-- Fix the radio button issue. I already know how to, I just need to do it.
-- The above involves including Seperator items in the ```path```. But should it be done always? What if theres no seperators at all? Only for radio buttons? I'll have to think about it.
+- ~~Fix the radio button issue. I already know how to, I just need to do it.~~  **Done!**
+- ~~The above involves including Seperator items in the path. But should it be done always? What if theres no seperators at all? Only for radio buttons? I'll have to think about it.~~ **Always, unless theres no preceding seperator.**
 - Consider the ramifications of ```MenuBar``` extending ```HBoxContainer``` instead of ```Panel```. This removes the need for the weird ```HBoxContainer``` child, and (I think?) has no negative impact on functionality whatsoever.

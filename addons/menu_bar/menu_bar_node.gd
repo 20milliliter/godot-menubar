@@ -100,13 +100,34 @@ func setup_option(menu_button:MenuButton, local_index:int, shortcut_inputevent:I
 	shortcut.events = [shortcut_inputevent]
 	popup_menu.set_item_shortcut(local_index, shortcut)
 	
-
-signal item_pressed(path:String, popup_menu:PopupMenu, item_index:int)
 func convert_menuButton_signal(gId_of_item_pressed:int):
 	var menu = gId_to_parent_menuButton[gId_of_item_pressed]
 	var popup_menu = menu.get_popup()
-	var local_index = popup_menu.get_item_index(gId_of_item_pressed)
-	var path = "%s/%s" % [menu.text, popup_menu.get_item_text(local_index)]
-	emit_signal("item_pressed", path, popup_menu, local_index)
+	#get_item_index DOESN'T WORK :)
+	var local_index = gId_to_local_index[gId_of_item_pressed]
+	
+	#Find Prev Sep
+	var seperator_index = -1
+	for idx in range(local_index, -1, -1):
+		if popup_menu.is_item_separator(idx): 
+			seperator_index = idx
+			break
+	
+	#Find Next Sep
+	var next_sep_index = popup_menu.get_item_count()
+	for idx in range(local_index, next_sep_index):
+		if popup_menu.is_item_separator(idx): 
+			next_sep_index = idx
+			break
+	
+	var section_indices = range(seperator_index + 1, next_sep_index)
+	
+	var path = menu.text
+	if seperator_index != -1: path += "/%s" % popup_menu.get_item_text(seperator_index)
+	path += "/%s" % popup_menu.get_item_text(local_index)
+	emit_signal("item_pressed", path, popup_menu, local_index, section_indices)
 	if get_signal_connection_list("item_pressed").size() == 0:
 		print(path + " was pressed.")
+
+signal item_pressed(path:String, popup_menu:PopupMenu, item_index:int, section_indices:Array)
+#endregion
