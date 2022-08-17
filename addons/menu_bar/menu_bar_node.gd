@@ -6,6 +6,7 @@ func _enter_tree():
 	if Engine.is_editor_hint():
 		if get_node_or_null("MenuBarMenuButtons") == null:
 			init()
+
 func init():
 	self.set_deferred("offset_right", 0)
 	self.anchor_right = 1
@@ -58,12 +59,8 @@ func _ready():
 		setup_menu_bar()
 	return
 
-var name_to_gId = {}
-var gId_to_local_index = {}
 var gId_to_parent_menuButton = {}
 func setup_menu_bar():
-	name_to_gId.clear()
-	gId_to_local_index.clear()
 	gId_to_parent_menuButton.clear()
 
 	var all_menus_on_bar = $MenuBarMenuButtons.get_children()
@@ -77,19 +74,18 @@ func setup_single_menu(menu:MenuButton):
 	var menu_dictionary = shortcut_dictionary.get(menu.text)
 
 	for item_idx in menu_popup.item_count:
-		if menu_popup.is_item_separator(item_idx): continue
+		if menu_popup.is_item_separator(item_idx): 
+			menu_popup.set_item_id(item_idx, 1337)
+			continue
 		var shortcut = menu_dictionary[menu_popup.get_item_text(item_idx)] if menu_dictionary != null else null
 		setup_option(menu, item_idx, shortcut)
+		
 
 var global_id_count = 0
 func setup_option(menu_button:MenuButton, local_index:int, shortcut_inputevent:InputEventKey):
 	var popup_menu = menu_button.get_popup()
 	var option_name = popup_menu.get_item_text(local_index)
-	#Name -> gID
-	name_to_gId[option_name] = global_id_count
 	popup_menu.set_item_id(local_index, global_id_count)
-	#gID -> LocalIdx
-	gId_to_local_index[global_id_count] = local_index
 	#gID -> PopupMenu
 	gId_to_parent_menuButton[global_id_count] = menu_button
 	global_id_count += 1
@@ -99,12 +95,11 @@ func setup_option(menu_button:MenuButton, local_index:int, shortcut_inputevent:I
 	var shortcut = Shortcut.new()
 	shortcut.events = [shortcut_inputevent]
 	popup_menu.set_item_shortcut(local_index, shortcut)
-	
+
 func convert_menuButton_signal(gId_of_item_pressed:int):
 	var menu = gId_to_parent_menuButton[gId_of_item_pressed]
 	var popup_menu = menu.get_popup()
-	#get_item_index DOESN'T WORK :)
-	var local_index = gId_to_local_index[gId_of_item_pressed]
+	var local_index = popup_menu.get_item_index(gId_of_item_pressed)
 	
 	#Find Prev Sep
 	var seperator_index = -1
